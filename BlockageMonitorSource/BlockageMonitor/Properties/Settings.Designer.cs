@@ -12,7 +12,7 @@ namespace BlockageMonitor.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.4.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.9.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -44,6 +44,78 @@ namespace BlockageMonitor.Properties {
             }
             set {
                 this["FileName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("8")]
+        public int setVehicle_numSections {
+            get {
+                return ((int)(this["setVehicle_numSections"]));
+            }
+            set {
+                this["setVehicle_numSections"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public float setPlanterSpeed {
+            get {
+                return ((float)(this["setPlanterSpeed"]));
+            }
+            set {
+                this["setPlanterSpeed"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.762")]
+        public float setPlanterRowWidth {
+            get {
+                return ((float)(this["setPlanterRowWidth"]));
+            }
+            set {
+                this["setPlanterRowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
+        public float setPlanterTargetPopulation {
+            get {
+                return ((float)(this["setPlanterTargetPopulation"]));
+            }
+            set {
+                this["setPlanterTargetPopulation"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public float setPlanterDoublesFactor {
+            get {
+                return ((float)(this["setPlanterDoublesFactor"]));
+            }
+            set {
+                this["setPlanterDoublesFactor"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool setMenu_isMetric {
+            get {
+                return ((bool)(this["setMenu_isMetric"]));
+            }
+            set {
+                this["setMenu_isMetric"] = value;
             }
         }
     }

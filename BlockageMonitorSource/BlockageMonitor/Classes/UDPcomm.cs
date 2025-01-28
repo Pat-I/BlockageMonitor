@@ -25,6 +25,7 @@ namespace BlockageMonitor
         private HandleDataDelegateObj HandleDataDelegate = null;
         private Socket recvSocket;
         private Socket sendSocket;
+        
 
         public UDPComm(frmStart CallingForm, int ReceivePort, int SendToPort, int SendFromPort, string ConnectionName, string DestinationEndPoint = "")
         {
@@ -159,9 +160,263 @@ namespace BlockageMonitor
                             switch (Data[3])
                             {
                                 case 254:
+                                    
                                     // AutoSteer AGIO PGN
                                     mf.AutoSteerPGN.ParseByteData(Data);
                                     break;
+
+
+                                //// Feedback from Arduino Planter Monitor
+                                case 224:
+                                    {
+                                        mf.rc.fbNumSections = (int)Data[5];
+                                        mf.rc.fbTargetSpeed = (float)Data[6] / 10.0f;
+                                        mf.rc.fbRowWidth = ((float)(Data[7] << 8) + (float)Data[8]) * .1f; // + (float)data[8]; // ; mc.actualSteerAngleChart = (Int16)((data[6] << 8) + data[5]);
+                                        mf.rc.fbTargetPopulation = ((int)(Data[9] << 8) + (float)Data[10]) * 10.0f;
+                                        mf.rc.fbDoublesFactor = (float)Data[11] / 100.0f;
+
+                                        if (Data[12] == 1)
+                                        {
+                                            mf.rc.fbIsMetric = true;
+                                        }
+                                        else
+                                        {
+                                            mf.rc.fbIsMetric = false;
+                                        }
+                                        if (mf.rc.fbNumSections != Properties.Settings.Default.setVehicle_numSections ||
+                                                mf.rc.fbTargetSpeed != Properties.Settings.Default.setPlanterSpeed ||
+                                                Math.Abs(mf.rc.fbRowWidth - Properties.Settings.Default.setPlanterRowWidth) > .001 ||
+                                                mf.rc.fbTargetPopulation != Properties.Settings.Default.setPlanterTargetPopulation ||
+                                                mf.rc.fbDoublesFactor != Properties.Settings.Default.setPlanterDoublesFactor ||
+                                                mf.rc.fbIsMetric != Properties.Settings.Default.setMenu_isMetric)
+                                        {
+
+                                            mf.p_224.pgn[mf.p_224.highRowWidthX10] = unchecked((byte)((int)(Properties.Settings.Default.setPlanterRowWidth * 10.0f) >> 8));
+                                            mf.p_224.pgn[mf.p_224.lowRowWidthX10] = unchecked((byte)(int)(Properties.Settings.Default.setPlanterRowWidth * 10.0f));
+                                            mf.p_224.pgn[mf.p_224.numSections] = (byte)Properties.Settings.Default.setVehicle_numSections;
+                                            mf.p_224.pgn[mf.p_224.targetSpeedX10] = (byte)(Properties.Settings.Default.setPlanterSpeed * 10.0f);
+                                            mf.p_224.pgn[mf.p_224.highTargetPopulation] = unchecked((byte)((int)(Properties.Settings.Default.setPlanterTargetPopulation / 10) >> 8));
+                                            mf.p_224.pgn[mf.p_224.lowTargetPopulation] = unchecked((byte)(int)(Properties.Settings.Default.setPlanterTargetPopulation / 10));
+                                            mf.p_224.pgn[mf.p_224.doublesFactor] = unchecked((byte)(int)(Properties.Settings.Default.setPlanterDoublesFactor * 100.0f));
+                                            if (Properties.Settings.Default.setMenu_isMetric)
+                                            {
+                                                mf.p_224.pgn[mf.p_224.isMetric] = unchecked((byte)(int)1);
+                                            }
+                                            else
+                                            {
+                                                mf.p_224.pgn[mf.p_224.isMetric] = unchecked((byte)(int)0);
+                                            }
+
+                                            SendUDPMessage(mf.p_224.pgn);
+
+                                           // mf.TimedMessageBox(2000, "Planter Module", "Settings Sent To Planter Monitor Module");
+                                        } // end case
+                                        break;
+                                    }
+
+                                //// Population by row ////
+                                case 225:
+                                    {
+                                        int popIndex = 7;
+                                        for (int i = 5; i < 13; i++)
+                                        {
+                                            popIndex += 1;
+                                            //								if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
+                                            //								rc.rcPopulationPercent[popIndex] = (data[i] * 100000f / (float.Parse(Properties.Settings.Default.setPlanterTargetPopulation))) - 100f;
+                                            mf.rc.rcPopulation[popIndex] = Data[i] * 1000f;
+                                            mf.rc.rcPopulationPercent[popIndex] = (Data[i] * 100000f / Properties.Settings.Default.setPlanterTargetPopulation) - 100f;
+                                            if (mf.rc.rcPopulationPercent[popIndex] < -15f) mf.rc.rcPopulationPercent[popIndex] = -15f;
+                                            if (mf.rc.rcPopulationPercent[popIndex] > 115f) mf.rc.rcPopulationPercent[popIndex] = 115f;
+
+                                        }
+                                        break;
+                                    }
+
+
+                                //// Population by row ////
+                                case 226:
+                                    {
+                                        int popIndex = -1;
+                                        for (int i = 5; i < 13; i++)
+                                        {
+                                            popIndex += 1;
+                                            //								if (data[i] < 0) data[i] = 250;  // occurs with overflow situation
+                                            mf.rc.rcPopulation[popIndex] = Data[i] * 1000f;
+                                            mf.rc.rcPopulationPercent[popIndex] = (Data[i] * 100000f / Properties.Settings.Default.setPlanterTargetPopulation) - 100f;
+                                            if (mf.rc.rcPopulationPercent[popIndex] < -15f) mf.rc.rcPopulationPercent[popIndex] = -15f;
+                                            if (mf.rc.rcPopulationPercent[popIndex] > 115f) mf.rc.rcPopulationPercent[popIndex] = 115f;
+                                        }
+                                        break;
+                                    }
+                                //// Doubles by row ////
+                                case 227:
+                                    {
+
+                                        int doubleIndex = -2;
+
+                                        for (int i = 5; i < 13; i++)
+                                        {
+                                            doubleIndex += 3;
+                                            mf.rc.rcDoubles[doubleIndex] = (byte)Data[i] & 0b000111;
+                                            Data[i] = ((byte)(Data[i] >> 4));
+                                            doubleIndex -= 1;
+                                            mf.rc.rcDoubles[doubleIndex] = (byte)Data[i] & 0b000111;
+                                        }
+                                        break;
+                                    }
+                                //// Skips by row ////
+                                case 228:
+                                    {
+                                        int skipIndex = -2;
+                                        for (int i = 5; i < 13; i++)
+                                        {
+                                            skipIndex += 3;
+                                            mf.rc.rcSkips[skipIndex] = (byte)Data[i] & 0b000111;
+                                            Data[i] = ((byte)(Data[i] >> 4));
+                                            skipIndex -= 1;
+                                            mf.rc.rcSkips[skipIndex] = (byte)Data[i] & 0b000111;
+                                        }
+                                        break;
+                                    }
+                                //// Row crop summary ////
+                                case 229:
+                                    {
+                                        mf.population = (Int16)((Data[6] << 8) + Data[5]);
+                                        mf.population *= 10;
+                                        mf.singulation = (Int16)((Data[12] << 8) + Data[11]);
+                                        mf.singulation = mf.singulation / 10;
+                                        mf.skipPercent = (Int16)((Data[8] << 8) + Data[7]);
+                                        mf.skipPercent = mf.skipPercent / 10;
+                                        mf.doublesPercent = (Int16)((Data[10] << 8) + Data[9]);
+                                        mf.doublesPercent = mf.doublesPercent / 10;
+                                        break;
+                                    }
+                                //// Row crop status by row -- sets color ////
+                                ////
+                                /*
+                                case 230:   // test by Jim to catch row sensor state 16 rows stored in data[5] and data[6]
+                                    {
+
+
+                                        int jptest = 0;
+                                        int numToTest = 4;
+                                        if (tool.numOfSections < 4) numToTest = tool.numOfSections;
+                                        for (int i = 0; i < numToTest; i++)
+                                        {
+                                            jptest = data[5];
+                                            jptest = (byte)data[5] & 0b000011;
+                                            if (jptest == 0)
+                                            {
+                                                rc.SetStateNormal(i);
+                                            }
+                                            else if (jptest == 1)
+                                            {
+                                                rc.SetStateOut(i);
+                                                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                            }
+                                            else if (jptest == 2)
+                                            {
+                                                rc.SetStateSkip(i);
+                                            }
+                                            else if (jptest == 3)
+                                            {
+                                                rc.SetStateDouble(i);
+                                            }
+
+                                            data[5] = ((byte)(data[5] >> 2));
+                                        }
+
+                                        numToTest = 8;
+                                        if (tool.numOfSections < 8) numToTest = tool.numOfSections;
+                                        for (int i = 4; i < numToTest; i++)
+                                        {
+                                            jptest = data[6] & 0b000011;
+                                            if (jptest == 0)
+                                            {
+                                                rc.SetStateNormal(i);
+                                            }
+                                            else if (jptest == 1)
+                                            {
+                                                rc.SetStateOut(i);
+                                                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                            }
+                                            else if (jptest == 2)
+                                            {
+                                                rc.SetStateSkip(i);
+                                            }
+                                            else if (jptest == 3)
+                                            {
+                                                rc.SetStateDouble(i);
+                                            }
+
+                                            data[6] = ((byte)(data[6] >> 2));
+                                        }
+
+                                        numToTest = 12;
+                                        if (tool.numOfSections < 12) numToTest = tool.numOfSections;
+                                        for (int i = 8; i < numToTest; i++)
+                                        {
+                                            jptest = data[7] & 0b000011;
+                                            if (jptest == 0)
+                                            {
+                                                rc.SetStateNormal(i);
+                                            }
+                                            else if (jptest == 1)
+                                            {
+                                                rc.SetStateOut(i);
+                                                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                            }
+                                            else if (jptest == 2)
+                                            {
+                                                rc.SetStateSkip(i);
+                                            }
+                                            else if (jptest == 3)
+                                            {
+                                                rc.SetStateDouble(i);
+                                            }
+
+                                            data[7] = ((byte)(data[7] >> 2));
+                                        }
+
+                                        numToTest = 16;
+                                        if (tool.numOfSections < 16) numToTest = tool.numOfSections;
+                                        for (int i = 12; i < numToTest; i++)
+                                        {
+                                            jptest = data[8] & 0b000011;
+                                            if (jptest == 0)
+                                            {
+                                                rc.SetStateNormal(i);
+                                            }
+                                            else if (jptest == 1)
+                                            {
+                                                rc.SetStateOut(i);
+                                                if (Properties.Settings.Default.setPlanterAlarm_Active) sounds.sndDisconnected.Play();
+                                            }
+                                            else if (jptest == 2)
+                                            {
+                                                rc.SetStateSkip(i);
+                                            }
+                                            else if (jptest == 3)
+                                            {
+                                                rc.SetStateDouble(i);
+                                            }
+
+                                            data[8] = ((byte)(data[8] >> 2));
+                                        }
+
+                                        rc.fbFeedbackCounter = (int)data[9];
+
+                                        break;
+
+                                    }
+                                    */
+
+
+
+
+
+
+
                             }
                             break;
                     }

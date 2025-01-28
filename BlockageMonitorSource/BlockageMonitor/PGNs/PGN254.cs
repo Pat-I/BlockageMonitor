@@ -8,7 +8,7 @@ namespace BlockageMonitor
 {
     public class PGN254
     {
-        // AutoSteer Data
+        // AutoSteer Data from AOG
         // 0    header Hi       128 0x80
         // 1    header Lo       129 0x81
         // 2    source          126 0x7E

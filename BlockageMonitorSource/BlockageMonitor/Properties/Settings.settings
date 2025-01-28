@@ -8,5 +8,23 @@
     <Setting Name="FileName" Type="System.String" Scope="User">
       <Value Profile="(Default)">Default.SBM</Value>
     </Setting>
+    <Setting Name="setVehicle_numSections" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">8</Value>
+    </Setting>
+    <Setting Name="setPlanterSpeed" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">5</Value>
+    </Setting>
+    <Setting Name="setPlanterRowWidth" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">0.762</Value>
+    </Setting>
+    <Setting Name="setPlanterTargetPopulation" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">1000</Value>
+    </Setting>
+    <Setting Name="setPlanterDoublesFactor" Type="System.Single" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="setMenu_isMetric" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

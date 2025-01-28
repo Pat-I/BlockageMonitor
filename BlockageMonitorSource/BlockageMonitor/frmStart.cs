@@ -20,11 +20,12 @@ namespace BlockageMonitor
         public clsTools Tls;
         public UDPComm UDPaog;
         public UDPComm UDPsensors;
+        public OfRowCrop rc;
 
         private int ButtonRight;
         private int cBlockSeconds = 10;
         private bool cMonitoringOn;
-        private int cRowCount = 10;
+        public int cRowCount = 10;
         private int cRowsPerModule = 16;
         private bool cUseTransparent = false;
         private bool IsTransparent;
@@ -37,10 +38,18 @@ namespace BlockageMonitor
         private int mouseX = 0;
         private int mouseY = 0;
 
+        //Planter variables
+        public float population;
+        public float singulation;
+        public float skipPercent;
+        public float doublesPercent;
+
         public frmStart()
         {
             InitializeComponent();
             Tls = new clsTools(this);
+
+            
 
             ButtonRight = this.Width - btnSettings.Left;
 
@@ -54,6 +63,8 @@ namespace BlockageMonitor
             AutoSteerPGN = new PGN254(this);
             BlockageModules = new clsModules(this, 16);
             SensorAlarm = new clsAlarm(this);
+            //row crop path
+            rc = new OfRowCrop(this);
             this.BackColor = Properties.Settings.Default.DayColour;
             chart1.BackColor = Properties.Settings.Default.DayColour;
         }

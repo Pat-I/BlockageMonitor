@@ -62,6 +62,7 @@
     <Compile Include="Classes\clsSeedRow.cs" />
     <Compile Include="Classes\clsSeedRows.cs" />
     <Compile Include="Classes\clsTools.cs" />
+    <Compile Include="Classes\OfRowCrop.cs" />
     <Compile Include="Classes\UDPcomm.cs" />
     <Compile Include="FormNumeric.cs">
       <SubType>Form</SubType>
@@ -97,6 +98,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Lang.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PGNs\PgnOut.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="PGNs\PGN254.cs" />
     <Compile Include="PGNs\PGN32100.cs" />
