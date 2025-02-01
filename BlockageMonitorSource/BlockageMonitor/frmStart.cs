@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AgOpenGPS;
+using System;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -86,6 +87,7 @@ namespace BlockageMonitor
             {
                 cRowCount = value;
                 Tls.SaveProperty("SeedRowCount", cRowCount.ToString());
+                Properties.Settings.Default.setVehicle_numSections = cRowCount;
             }
         }
 
@@ -274,7 +276,8 @@ namespace BlockageMonitor
             }
 
             Form frm = new frmSeedRows(this);
-            frm.Show();
+            frm.Show();    
+            
         }
 
         private void SetTransparent()
@@ -389,6 +392,45 @@ namespace BlockageMonitor
                     transparentToolStripMenuItem.Image = Properties.Resources.Cancel64;
                 }
             }
+        }
+
+
+
+
+        public bool KeypadToNUD(NumericUpDown sender, Form owner)
+        {
+            sender.BackColor = Color.Red;
+            sender.Value = Math.Round(sender.Value, sender.DecimalPlaces);
+
+            using (FormNumeric form = new FormNumeric((double)sender.Minimum, (double)sender.Maximum, (double)sender.Value))
+            {
+                DialogResult result = form.ShowDialog(owner);
+                if (result == DialogResult.OK)
+                {
+                    sender.Value = (decimal)form.ReturnValue;
+                    sender.BackColor = Color.AliceBlue;
+                    return true;
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    sender.BackColor = Color.AliceBlue;
+                }
+                return false;
+            }
+        }
+
+        private void planterSettingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Form fs = Tls.IsFormOpen("FormArduinoSettings");
+
+            if (fs != null)
+            {
+                fs.Focus();
+                return;
+            }
+
+            Form frm = new FormArduinoSettings(this);
+            frm.Show();
         }
     }
 }

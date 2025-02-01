@@ -73,7 +73,7 @@ namespace BlockageMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0.762")]
+        [global::System.Configuration.DefaultSettingValueAttribute("76.2")]
         public float setPlanterRowWidth {
             get {
                 return ((float)(this["setPlanterRowWidth"]));
@@ -97,7 +97,7 @@ namespace BlockageMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.4")]
         public float setPlanterDoublesFactor {
             get {
                 return ((float)(this["setPlanterDoublesFactor"]));
@@ -109,13 +109,49 @@ namespace BlockageMonitor.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool setMenu_isMetric {
             get {
                 return ((bool)(this["setMenu_isMetric"]));
             }
             set {
                 this["setMenu_isMetric"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool setPlanterAlarm_Active {
+            get {
+                return ((bool)(this["setPlanterAlarm_Active"]));
+            }
+            set {
+                this["setPlanterAlarm_Active"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool setPlanter_Active {
+            get {
+                return ((bool)(this["setPlanter_Active"]));
+            }
+            set {
+                this["setPlanter_Active"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool setPlanterSimulator_Active {
+            get {
+                return ((bool)(this["setPlanterSimulator_Active"]));
+            }
+            set {
+                this["setPlanterSimulator_Active"] = value;
             }
         }
     }

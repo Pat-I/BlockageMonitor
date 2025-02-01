@@ -15,15 +15,24 @@
       <Value Profile="(Default)">5</Value>
     </Setting>
     <Setting Name="setPlanterRowWidth" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">0.762</Value>
+      <Value Profile="(Default)">76.2</Value>
     </Setting>
     <Setting Name="setPlanterTargetPopulation" Type="System.Single" Scope="User">
       <Value Profile="(Default)">1000</Value>
     </Setting>
     <Setting Name="setPlanterDoublesFactor" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">10</Value>
+      <Value Profile="(Default)">0.4</Value>
     </Setting>
     <Setting Name="setMenu_isMetric" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="setPlanterAlarm_Active" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="setPlanter_Active" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="setPlanterSimulator_Active" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>

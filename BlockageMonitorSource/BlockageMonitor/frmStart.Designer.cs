@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmStart));
             this.dataSet1 = new System.Data.DataSet();
             this.dataTable1 = new System.Data.DataTable();
@@ -56,6 +56,7 @@
             this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.btnAlarm = new System.Windows.Forms.Button();
             this.btnSettings = new System.Windows.Forms.Button();
+            this.planterSettingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataSet1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataTable1)).BeginInit();
             this.mnuSettings.SuspendLayout();
@@ -145,15 +146,16 @@
             this.sensorsToolStripMenuItem,
             this.networkToolStripMenuItem,
             this.transparentToolStripMenuItem,
-            this.exitToolStripMenuItem});
+            this.exitToolStripMenuItem,
+            this.planterSettingsToolStripMenuItem});
             this.mnuSettings.Name = "mnuSettings";
-            this.mnuSettings.Size = new System.Drawing.Size(182, 116);
+            this.mnuSettings.Size = new System.Drawing.Size(210, 166);
             // 
             // sensorsToolStripMenuItem
             // 
             this.sensorsToolStripMenuItem.Image = global::BlockageMonitor.Properties.Resources.Sec1;
             this.sensorsToolStripMenuItem.Name = "sensorsToolStripMenuItem";
-            this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(181, 28);
+            this.sensorsToolStripMenuItem.Size = new System.Drawing.Size(209, 28);
             this.sensorsToolStripMenuItem.Text = "Seed Rows";
             this.sensorsToolStripMenuItem.Click += new System.EventHandler(this.sensorsToolStripMenuItem_Click);
             // 
@@ -161,14 +163,14 @@
             // 
             this.networkToolStripMenuItem.Image = global::BlockageMonitor.Properties.Resources.SubnetSend;
             this.networkToolStripMenuItem.Name = "networkToolStripMenuItem";
-            this.networkToolStripMenuItem.Size = new System.Drawing.Size(181, 28);
+            this.networkToolStripMenuItem.Size = new System.Drawing.Size(209, 28);
             this.networkToolStripMenuItem.Text = "Modules";
             this.networkToolStripMenuItem.Click += new System.EventHandler(this.networkToolStripMenuItem_Click);
             // 
             // transparentToolStripMenuItem
             // 
             this.transparentToolStripMenuItem.Name = "transparentToolStripMenuItem";
-            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(181, 28);
+            this.transparentToolStripMenuItem.Size = new System.Drawing.Size(209, 28);
             this.transparentToolStripMenuItem.Text = "Transparent";
             this.transparentToolStripMenuItem.Click += new System.EventHandler(this.transparentToolStripMenuItem_Click);
             // 
@@ -176,7 +178,7 @@
             // 
             this.exitToolStripMenuItem.Image = global::BlockageMonitor.Properties.Resources.FanOff;
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 28);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(209, 28);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -187,15 +189,15 @@
             // 
             // chart1
             // 
-            chartArea1.AxisY.Maximum = 100D;
-            chartArea1.AxisY.Minimum = 0D;
-            chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
+            chartArea2.AxisY.Maximum = 100D;
+            chartArea2.AxisY.Minimum = 0D;
+            chartArea2.Name = "ChartArea1";
+            this.chart1.ChartAreas.Add(chartArea2);
             this.chart1.Location = new System.Drawing.Point(12, 12);
             this.chart1.Name = "chart1";
-            series1.ChartArea = "ChartArea1";
-            series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Name = "Series1";
+            this.chart1.Series.Add(series2);
             this.chart1.Size = new System.Drawing.Size(797, 200);
             this.chart1.TabIndex = 189;
             this.chart1.Text = "chart1";
@@ -233,6 +235,13 @@
             this.btnSettings.TextAlign = System.Drawing.ContentAlignment.TopLeft;
             this.btnSettings.UseVisualStyleBackColor = false;
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            // 
+            // planterSettingsToolStripMenuItem
+            // 
+            this.planterSettingsToolStripMenuItem.Name = "planterSettingsToolStripMenuItem";
+            this.planterSettingsToolStripMenuItem.Size = new System.Drawing.Size(209, 28);
+            this.planterSettingsToolStripMenuItem.Text = "Planter Settings";
+            this.planterSettingsToolStripMenuItem.Click += new System.EventHandler(this.planterSettingsToolStripMenuItem_Click);
             // 
             // frmStart
             // 
@@ -289,6 +298,7 @@
         private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.ToolStripMenuItem transparentToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem planterSettingsToolStripMenuItem;
     }
 }
 
